@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { SignupPage } from '../../pages/signupPage.js';
+import testData from '../../data/testData.json';
 
-const testData = {
+const signupData = {
   name: 'Test User',
   email: `test${Date.now()}@example.com`, // Unique email for each test run
   password: 'Test@1234',
@@ -19,9 +20,7 @@ const testData = {
   state: 'Test State',
   city: 'Test City',
   zipcode: '123456',
-  mobileNumber: '1234567890',
-  existingName: 'Jane Doe',
-  existingEmail: 'janedoeqa@yopmail.com'
+  mobileNumber: '1234567890'
 };
 
 test.describe('Signup Tests', () => {
@@ -32,14 +31,14 @@ test.describe('Signup Tests', () => {
     await signupPage.goto();
 
     // Enter signup details and submit
-    await signupPage.enterSignupDetails(testData.name, testData.email);
+    await signupPage.enterSignupDetails(signupData.name, signupData.email);
     await signupPage.clickSignup();
 
     // Verify 'ENTER ACCOUNT INFORMATION' is visible
     await expect(page.locator('text=ENTER ACCOUNT INFORMATION')).toBeVisible();
 
     // Complete and submit the signup form
-    await signupPage.completeSignupForm(testData);
+    await signupPage.completeSignupForm(signupData);
     await signupPage.submitForm();
 
     // Verify 'ACCOUNT CREATED!' is visible
@@ -47,7 +46,7 @@ test.describe('Signup Tests', () => {
 
     // Click continue and verify user is logged in
     await signupPage.clickContinue();
-    await expect(page.locator(`text=Logged in as ${testData.name}`)).toBeVisible();
+    await expect(page.locator(`text=Logged in as ${signupData.name}`)).toBeVisible();
 
     // Delete the account
     await signupPage.deleteAccount();
@@ -63,7 +62,7 @@ test.describe('Signup Tests', () => {
     await signupPage.goto();
 
     // Enter existing email and submit
-    await signupPage.enterSignupDetails(testData.existingName, testData.existingEmail);
+    await signupPage.enterSignupDetails(testData.validUser.email, testData.validUser.password);
     await signupPage.clickSignup();
 
     // Verify error message appears

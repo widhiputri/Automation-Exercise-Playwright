@@ -21,7 +21,7 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: 'https://www.automationexercise.com',
-    headless: false,
+    headless: true,
   },
 
   /* Configure projects for major browsers */
