@@ -5,10 +5,9 @@ import testData from '../../data/testData.json';
 const loginData = {
     email: 'invalid@example.com', 
     password: 'WrongPassword123'
-  };
+};
 
-test.describe('Login Tests', () => {
-  
+test.describe('Login Tests', () => { 
   test('Login User with Correct Email and Password', async ({ page }) => {
     const loginPage = new LoginPage(page);
 
